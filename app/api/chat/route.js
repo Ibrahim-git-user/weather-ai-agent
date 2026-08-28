@@ -30,7 +30,6 @@ function weatherConditon(code) {
 
 
 export async function POST(req) {
-  console.log('=== CHAT API POST START ===');
 
   try {
     const body = await req.json();
@@ -75,7 +74,7 @@ export async function POST(req) {
           description: 'Get the weather for a city',
           parameters: z.object({ city: z.string() }),
           execute: async ({ city }) => {
-
+            try{
             const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`, { method: 'GET' });
             const payload = await response.json();
             console.log('getting longitude and latitude for city:', city);
@@ -89,17 +88,27 @@ export async function POST(req) {
               city: city,
               temperature: String(weatherData.current_weather.temperature) + " " + String(weatherData.current_weather_units.temperature),
               condition: weatherConditon(weatherData.current_weather.weathercode),
-            };
+            };}
+            catch (error) {
+              console.error('Error fetching weather data:', error);
+              return {
+                city: city,
+                temperature: 'N/A',
+                condition: 'Unable to fetch weather data',
+              };
+            }
           },
         }),
       },
       onStepFinish({ steps, text }) {
+        /*
         console.log('MODEL STEP FINISHED');
         console.log('Step text:', text);
         console.log('Step details:', steps);
+        */
       },
       onChunk({ chunk }) {
-        console.log('STREAM CHUNK:', chunk.type, chunk);
+        //console.log('STREAM CHUNK:', chunk.type, chunk);
       },
       onError(error) {
         console.error('STREAM TEXT ERROR:', {
@@ -109,11 +118,11 @@ export async function POST(req) {
           status: error.status,
           fullError: error
         });
-        throw error; // Re-throw so it gets caught by the outer catch
+        throw error;
       },
     });
 
-    console.log('StreamText created successfully with local Ollama model qwen2.5:3b');
+    // console.log('StreamText created successfully with local Ollama model qwen2.5:3b');
 
     return createUIMessageStreamResponse({
       stream: toUIMessageStream({
@@ -122,7 +131,7 @@ export async function POST(req) {
       }),
     });
   } catch (error) {
-    console.error('CHAT API POST FATAL ERROR:', error);
+    console.error('error occurred in chat api post request', error);
     return Response.json(
       { error: 'Internal server error', details: String(error) },
       { status: 500 }
