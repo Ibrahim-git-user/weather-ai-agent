@@ -5,8 +5,10 @@ curl -fsSL https://ollama.com | sh
 ollama run qwen2.5:3b
 
 
-run the development server:
+After cloning the project, run the development server:
 ```bash
+cd weather-ai-agent
+npm install
 npm run dev
 
 
