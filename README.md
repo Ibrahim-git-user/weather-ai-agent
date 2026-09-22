@@ -1,18 +1,19 @@
-First, install the AI Model qwen2.5:3b using these two commands in terminal.
-
-```bash
-curl -fsSL https://ollama.com | sh
-ollama run qwen2.5:3b
+# My Weather AI Project built using Next.js and Qwen LLM model
 
 
-After cloning the project, run the development server:
-```bash
-cd weather-ai-agent
-npm install
-npm run dev
+## Table of Contents
+
+- [License](#license)
+- [Usage](#usage)
 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Tech Stack
+
+- **Next.js**
+- **LLM**
+- **Vercel**
+- **React.js**
+
 
 
 
@@ -23,3 +24,25 @@ This project is licensed under the License - see the [LICENSE](https://github.co
 ---
 
 Made with ❤ by [Ibrahim-git-user](https://github.com/Ibrahim-git-user)
+
+
+
+## Usage
+
+First, install the LLM Model qwen2.5:3b using these two commands in terminal.
+
+```bash
+curl -fsSL https://ollama.com | sh
+ollama run qwen2.5:3b
+
+
+Now, clone the repo and run the development server:
+```bash
+cd weather-ai-agent
+npm install
+npm run dev
+
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+
